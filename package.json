@@ -1,0 +1,19 @@
+{
+  "name": "florin-coin-opensea-viewer",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "OpenSea-compatible 3D animation_url viewer for the Florin Coin GLB.",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "validate:metadata": "node scripts/validate-metadata.mjs"
+  },
+  "dependencies": {
+    "@vitejs/plugin-basic-ssl": "latest",
+    "vite": "latest",
+    "three": "latest"
+  },
+  "devDependencies": {}
+}

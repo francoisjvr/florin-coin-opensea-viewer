@@ -1,0 +1,11 @@
+{
+  "name": "Florin Coin #1",
+  "description": "A voxel Florin coin displayed inside a cinematic interactive 3D environment. This metadata uses animation_url so OpenSea renders the hosted viewer, matching projects that present a full 3D scene instead of only a static model.",
+  "image": "https://francoisjvr.github.io/florin-coin-opensea-viewer/assets/florin-preview.png",
+  "animation_url": "https://francoisjvr.github.io/florin-coin-opensea-viewer/",
+  "attributes": [
+    { "trait_type": "Asset", "value": "Florin Coin" },
+    { "trait_type": "Style", "value": "Voxel" },
+    { "trait_type": "Presentation", "value": "Interactive 3D environment" }
+  ]
+}

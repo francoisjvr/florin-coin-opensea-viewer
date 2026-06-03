@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Florin Coin — 3D Viewer</title>
+    <meta name="description" content="Interactive OpenSea-compatible 3D viewer for Florin Coin." />
+    <meta property="og:title" content="Florin Coin — 3D Viewer" />
+    <meta property="og:description" content="A voxel Florin coin staged in a cinematic 3D environment." />
+    <meta property="og:image" content="/assets/florin-preview.png" />
+  </head>
+  <body>
+    <main id="app" aria-label="Florin Coin 3D environment">
+      <canvas id="scene" aria-hidden="true"></canvas>
+      <section class="hud">
+        <p class="eyebrow">Florin Coin</p>
+        <h1>Voxel relic,<br />minted in light.</h1>
+        <p class="copy">Drag to orbit. Scroll to inspect. OpenSea reads this page through the NFT <code>animation_url</code>.</p>
+      </section>
+      <div class="loading" id="loading">loading Florin GLB…</div>
+      <noscript>This 3D OpenSea viewer requires JavaScript.</noscript>
+    </main>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
