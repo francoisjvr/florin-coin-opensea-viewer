@@ -14,7 +14,7 @@
 * { box-sizing: border-box; }
 html, body, #app { width: 100%; height: 100%; margin: 0; overflow: hidden; }
 body {
-  background: radial-gradient(circle at 50% 35%, #1d3f31 0%, #0c1c18 34%, #040807 72%);
+  background: #030806;
   color: #fff5d8;
   font-family: Georgia, 'Times New Roman', serif;
 }
@@ -27,26 +27,9 @@ body {
   display: block;
 }
 
-#app::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background:
-    linear-gradient(120deg, rgba(144, 255, 177, .10), transparent 30%, rgba(49, 140, 90, .10) 70%, transparent),
-    radial-gradient(circle at 30% 25%, rgba(141, 245, 168, .12), transparent 22%),
-    radial-gradient(circle at 76% 70%, rgba(73, 190, 116, .08), transparent 24%);
-  mix-blend-mode: screen;
-}
-
+#app::before,
 #app::after {
-  content: '';
-  position: fixed;
-  inset: -30%;
-  pointer-events: none;
-  opacity: .23;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='.65'/%3E%3C/svg%3E");
-  animation: drift 12s linear infinite;
+  content: none;
 }
 
 .hud {

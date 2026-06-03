@@ -7,12 +7,13 @@ import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment
 const canvas = document.querySelector('#scene');
 const loading = document.querySelector('#loading');
 
-const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false, powerPreference: 'high-performance' });
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setClearColor(0x030806, 1);
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 0.96;
+renderer.toneMappingExposure = 0.9;
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
@@ -86,20 +87,8 @@ scene.add(greenBounce);
 const fill = new THREE.HemisphereLight(0xd8ffe4, 0x08180d, 0.62);
 scene.add(fill);
 
-const emberCount = 180;
-const positions = new Float32Array(emberCount * 3);
-for (let i = 0; i < emberCount; i++) {
-  positions[i * 3] = (Math.random() - 0.5) * 30;
-  positions[i * 3 + 1] = Math.random() * 12 - 1.5;
-  positions[i * 3 + 2] = (Math.random() - 0.5) * 30;
-}
-const particleGeometry = new THREE.BufferGeometry();
-particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-const particles = new THREE.Points(
-  particleGeometry,
-  new THREE.PointsMaterial({ color: 0x9effb9, size: 0.028, transparent: true, opacity: 0.38, depthWrite: false })
-);
-scene.add(particles);
+// No particle/fog layer: keep the air crisp so the coin silhouette is clean.
+const particles = null;
 
 const loader = new GLTFLoader();
 let coin;
@@ -128,7 +117,9 @@ loader.load(
     coin.position.sub(center);
     const coinPivot = new THREE.Group();
     coinPivot.position.set(0, 2.35, 0);
-    coinPivot.rotation.set(Math.PI * -0.035, 0, 0);
+    // The VOX converter maps MagicaVoxel Z to Three.js Y-up, so the coin is
+    // already standing straight. Keep the pivot un-tilted: no slant.
+    coinPivot.rotation.set(0, 0, 0);
     coinPivot.scale.setScalar(scale);
     coinPivot.add(coin);
     rig.add(coinPivot);
@@ -156,7 +147,7 @@ function tick() {
   rig.position.y = Math.sin(t * 0.85) * 0.035;
   ring.rotation.z = t * 0.08;
   innerRing.rotation.z = -t * 0.11;
-  particles.rotation.y = t * 0.015;
+  if (particles) particles.rotation.y = t * 0.015;
   key.position.x = -4.6 + Math.sin(t * 0.28) * 0.9;
   crown.intensity = 88 + Math.sin(t * 0.7) * 8;
   renderer.render(scene, camera);
