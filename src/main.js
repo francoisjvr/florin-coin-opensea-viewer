@@ -13,7 +13,7 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setClearColor(0x030806, 1);
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.toneMapping = THREE.LinearToneMapping;
-renderer.toneMappingExposure = 0.55;
+renderer.toneMappingExposure = 0.38;
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
@@ -62,7 +62,7 @@ innerRing.material = ringMaterial.clone();
 innerRing.material.opacity = 0.14;
 scene.add(innerRing);
 
-const key = new THREE.SpotLight(0xd9ffe4, 34, 48, Math.PI * 0.42, 0.98, 2.0);
+const key = new THREE.SpotLight(0xd9ffe4, 17, 48, Math.PI * 0.42, 0.98, 2.0);
 key.position.set(-4.8, 10.5, 7.8);
 key.target.position.set(0, 2.22, 0);
 key.castShadow = true;
@@ -70,21 +70,21 @@ key.shadow.mapSize.set(2048, 2048);
 scene.add(key);
 scene.add(key.target);
 
-const crown = new THREE.SpotLight(0xf0fff4, 10, 30, Math.PI * 0.5, 0.99, 2.2);
+const crown = new THREE.SpotLight(0xf0fff4, 5, 30, Math.PI * 0.5, 0.99, 2.2);
 crown.position.set(0, 8.6, 2.8);
 crown.target.position.set(0, 2.42, 0);
 scene.add(crown);
 scene.add(crown.target);
 
-const rim = new THREE.DirectionalLight(0x75d69b, 0.22);
+const rim = new THREE.DirectionalLight(0x75d69b, 0.11);
 rim.position.set(7, 5, -9);
 scene.add(rim);
 
-const greenBounce = new THREE.PointLight(0x59d982, 0.35, 8, 2.8);
+const greenBounce = new THREE.PointLight(0x59d982, 0.175, 8, 2.8);
 greenBounce.position.set(0, -0.72, 3.2);
 scene.add(greenBounce);
 
-const fill = new THREE.HemisphereLight(0xeaffef, 0x06110a, 0.34);
+const fill = new THREE.HemisphereLight(0xeaffef, 0x06110a, 0.17);
 scene.add(fill);
 
 // No particle/fog layer: keep the air crisp so the coin silhouette is clean.
@@ -101,9 +101,11 @@ loader.load(
         node.castShadow = true;
         node.receiveShadow = true;
         if (node.material) {
-          node.material = new THREE.MeshBasicMaterial({
+          node.material = new THREE.MeshStandardMaterial({
             vertexColors: true,
-            toneMapped: false,
+            metalness: 0.58,
+            roughness: 0.34,
+            envMapIntensity: 0.72,
           });
         }
       }
@@ -151,7 +153,7 @@ function tick() {
   innerRing.rotation.z = -t * 0.11;
   if (particles) particles.rotation.y = t * 0.015;
   key.position.x = -4.6 + Math.sin(t * 0.28) * 0.9;
-  crown.intensity = 9 + Math.sin(t * 0.7) * 1;
+  crown.intensity = 4.5 + Math.sin(t * 0.7) * 0.5;
   renderer.render(scene, camera);
   requestAnimationFrame(tick);
 }
