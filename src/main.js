@@ -12,15 +12,15 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.12;
+renderer.toneMappingExposure = 1.38;
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
 const scene = new THREE.Scene();
-scene.fog = new THREE.FogExp2(0x05070c, 0.047);
+scene.fog = new THREE.FogExp2(0x05070c, 0.034);
 
-const camera = new THREE.PerspectiveCamera(42, window.innerWidth / window.innerHeight, 0.1, 160);
-camera.position.set(9.5, 6.2, 12.5);
+const camera = new THREE.PerspectiveCamera(38, window.innerWidth / window.innerHeight, 0.1, 160);
+camera.position.set(0, 5.25, 13.6);
 
 const pmrem = new THREE.PMREMGenerator(renderer);
 scene.environment = pmrem.fromScene(new RoomEnvironment(renderer), 0.04).texture;
@@ -31,7 +31,7 @@ controls.dampingFactor = 0.055;
 controls.minDistance = 5;
 controls.maxDistance = 30;
 controls.maxPolarAngle = Math.PI * 0.49;
-controls.target.set(0.45, 1.15, 0);
+controls.target.set(0, 1.32, 0);
 
 const rig = new THREE.Group();
 scene.add(rig);
@@ -62,17 +62,29 @@ innerRing.material = ringMaterial.clone();
 innerRing.material.opacity = 0.35;
 scene.add(innerRing);
 
-const key = new THREE.SpotLight(0xffd18b, 600, 42, Math.PI * 0.17, 0.42, 1.15);
-key.position.set(-5, 11, 7);
+const key = new THREE.SpotLight(0xffd18b, 950, 46, Math.PI * 0.16, 0.34, 1.05);
+key.position.set(-4.6, 12.5, 7.4);
+key.target.position.set(0, 1.05, 0);
 key.castShadow = true;
 key.shadow.mapSize.set(2048, 2048);
 scene.add(key);
+scene.add(key.target);
 
-const rim = new THREE.DirectionalLight(0x71a7ff, 3.9);
+const crown = new THREE.SpotLight(0xfff0bd, 420, 28, Math.PI * 0.22, 0.55, 1.45);
+crown.position.set(0, 9.2, 2.4);
+crown.target.position.set(0, 1.4, 0);
+scene.add(crown);
+scene.add(crown.target);
+
+const rim = new THREE.DirectionalLight(0x6fa8ff, 5.4);
 rim.position.set(7, 5, -9);
 scene.add(rim);
 
-const fill = new THREE.HemisphereLight(0xffe3b0, 0x142042, 1.65);
+const warmBounce = new THREE.PointLight(0xff8d2a, 48, 13, 1.8);
+warmBounce.position.set(0, -0.65, 3.1);
+scene.add(warmBounce);
+
+const fill = new THREE.HemisphereLight(0xffe3b0, 0x142042, 1.15);
 scene.add(fill);
 
 const emberCount = 180;
@@ -110,12 +122,17 @@ loader.load(
     const box = new THREE.Box3().setFromObject(coin);
     const size = box.getSize(new THREE.Vector3());
     const center = box.getCenter(new THREE.Vector3());
+    const scale = 5.05 / Math.max(size.x, size.y, size.z);
+
+    // Keep the model's geometry centered inside a pivot so the turntable rotation
+    // happens exactly over the pedestal's center instead of orbiting off-axis.
     coin.position.sub(center);
-    const scale = 5.15 / Math.max(size.x, size.y, size.z);
-    coin.scale.setScalar(scale);
-    coin.rotation.set(Math.PI * -0.04, Math.PI * 0.18, Math.PI * -0.015);
-    coin.position.set(-1.15, 0.48, 0);
-    rig.add(coin);
+    const coinPivot = new THREE.Group();
+    coinPivot.position.set(0, 1.08, 0);
+    coinPivot.rotation.set(Math.PI * -0.035, 0, 0);
+    coinPivot.scale.setScalar(scale);
+    coinPivot.add(coin);
+    rig.add(coinPivot);
     loading.classList.add('is-hidden');
   },
   undefined,
@@ -136,12 +153,13 @@ const clock = new THREE.Clock();
 function tick() {
   const t = clock.getElapsedTime();
   controls.update();
-  rig.rotation.y = Math.sin(t * 0.42) * 0.34;
-  rig.position.y = Math.sin(t * 1.1) * 0.06;
+  rig.rotation.y = -t * 0.08;
+  rig.position.y = Math.sin(t * 0.85) * 0.035;
   ring.rotation.z = t * 0.08;
   innerRing.rotation.z = -t * 0.11;
   particles.rotation.y = t * 0.015;
-  key.position.x = Math.sin(t * 0.42) * 5.2;
+  key.position.x = -4.6 + Math.sin(t * 0.28) * 0.9;
+  crown.intensity = 390 + Math.sin(t * 0.7) * 45;
   renderer.render(scene, camera);
   requestAnimationFrame(tick);
 }
