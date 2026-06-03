@@ -49,42 +49,75 @@ floor.position.y = -1.16;
 floor.receiveShadow = true;
 scene.add(floor);
 
-const ringGeometry = new THREE.TorusGeometry(3.55, 0.02, 8, 192);
-const ringMaterial = new THREE.MeshBasicMaterial({ color: 0x8beaa7, transparent: true, opacity: 0.16 });
+const ringGeometry = new THREE.TorusGeometry(3.55, 0.022, 8, 192);
+const ringMaterial = new THREE.MeshBasicMaterial({
+  color: 0x39ff14,
+  transparent: true,
+  opacity: 0.9,
+  depthWrite: false,
+});
 const ring = new THREE.Mesh(ringGeometry, ringMaterial);
 ring.rotation.x = Math.PI / 2;
 ring.position.y = -0.94;
 scene.add(ring);
 
+const ringGlowMaterial = new THREE.MeshBasicMaterial({
+  color: 0x39ff14,
+  transparent: true,
+  opacity: 0.22,
+  blending: THREE.AdditiveBlending,
+  depthWrite: false,
+});
+const ringGlow = new THREE.Mesh(new THREE.TorusGeometry(3.55, 0.105, 16, 192), ringGlowMaterial);
+ringGlow.rotation.x = Math.PI / 2;
+ringGlow.position.y = -0.935;
+scene.add(ringGlow);
+
 const innerRing = ring.clone();
 innerRing.scale.setScalar(0.58);
 innerRing.material = ringMaterial.clone();
-innerRing.material.opacity = 0.14;
+innerRing.material.opacity = 0.82;
 scene.add(innerRing);
 
-const key = new THREE.SpotLight(0xd9ffe4, 17, 48, Math.PI * 0.42, 0.98, 2.0);
-key.position.set(-4.8, 10.5, 7.8);
-key.target.position.set(0, 2.22, 0);
-key.castShadow = true;
-key.shadow.mapSize.set(2048, 2048);
-scene.add(key);
-scene.add(key.target);
+const innerRingGlow = ringGlow.clone();
+innerRingGlow.scale.setScalar(0.58);
+innerRingGlow.material = ringGlowMaterial.clone();
+innerRingGlow.material.opacity = 0.28;
+scene.add(innerRingGlow);
 
-const crown = new THREE.SpotLight(0xf0fff4, 5, 30, Math.PI * 0.5, 0.99, 2.2);
+const leftKey = new THREE.SpotLight(0xeaffef, 10, 48, Math.PI * 0.48, 0.99, 2.1);
+leftKey.position.set(-5.2, 7.2, 6.4);
+leftKey.target.position.set(0, 2.35, 0);
+leftKey.castShadow = true;
+leftKey.shadow.mapSize.set(2048, 2048);
+scene.add(leftKey);
+scene.add(leftKey.target);
+
+const rightKey = new THREE.SpotLight(0xeaffef, 10, 48, Math.PI * 0.48, 0.99, 2.1);
+rightKey.position.set(5.2, 7.2, 6.4);
+rightKey.target.position.set(0, 2.35, 0);
+scene.add(rightKey);
+scene.add(rightKey.target);
+
+const crown = new THREE.SpotLight(0xf0fff4, 4.5, 30, Math.PI * 0.55, 1.0, 2.3);
 crown.position.set(0, 8.6, 2.8);
 crown.target.position.set(0, 2.42, 0);
 scene.add(crown);
 scene.add(crown.target);
 
-const rim = new THREE.DirectionalLight(0x75d69b, 0.11);
-rim.position.set(7, 5, -9);
-scene.add(rim);
+const backLeftRim = new THREE.DirectionalLight(0x75d69b, 0.08);
+backLeftRim.position.set(-6, 4.8, -8);
+scene.add(backLeftRim);
 
-const greenBounce = new THREE.PointLight(0x59d982, 0.175, 8, 2.8);
+const backRightRim = new THREE.DirectionalLight(0x75d69b, 0.08);
+backRightRim.position.set(6, 4.8, -8);
+scene.add(backRightRim);
+
+const greenBounce = new THREE.PointLight(0x39ff14, 0.7, 7, 2.3);
 greenBounce.position.set(0, -0.72, 3.2);
 scene.add(greenBounce);
 
-const fill = new THREE.HemisphereLight(0xeaffef, 0x06110a, 0.17);
+const fill = new THREE.HemisphereLight(0xeaffef, 0x06110a, 0.2);
 scene.add(fill);
 
 // No particle/fog layer: keep the air crisp so the coin silhouette is clean.
@@ -150,10 +183,10 @@ function tick() {
   rig.rotation.y = -t * 0.08;
   rig.position.y = Math.sin(t * 0.85) * 0.035;
   ring.rotation.z = t * 0.08;
+  ringGlow.rotation.z = t * 0.08;
   innerRing.rotation.z = -t * 0.11;
+  innerRingGlow.rotation.z = -t * 0.11;
   if (particles) particles.rotation.y = t * 0.015;
-  key.position.x = -4.6 + Math.sin(t * 0.28) * 0.9;
-  crown.intensity = 4.5 + Math.sin(t * 0.7) * 0.5;
   renderer.render(scene, camera);
   requestAnimationFrame(tick);
 }
