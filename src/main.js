@@ -406,8 +406,7 @@ function loaderSetup() {
 }
 
 function initialPreset() {
-  const requested = new URLSearchParams(window.location.search).get('preset');
-  return PRESETS[requested] ? requested : 'green-pop';
+  return 'emerald-glow';
 }
 
 presetButtons.forEach((button) => {
@@ -426,7 +425,7 @@ const clock = new THREE.Clock();
 function tick() {
   const t = clock.getElapsedTime();
   controls.update();
-  rig.rotation.y = -t * 0.32;
+  rig.rotation.y = -t * 0.64;
   rig.position.y = Math.sin(t * 0.85) * 0.035;
   atmosphere.rotation.y = t * 0.006;
   stars.rotation.y = t * 0.004;
