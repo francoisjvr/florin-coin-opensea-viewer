@@ -25,16 +25,44 @@ body {
 
 body[data-preset='palette-pop'] {
   background:
-    radial-gradient(circle at 50% 36%, rgba(59, 255, 111, .18), transparent 25%),
+    radial-gradient(circle at 50% 36%, rgba(59, 255, 111, .21), transparent 25%),
     radial-gradient(circle at 20% 26%, rgba(74, 125, 255, .16), transparent 32%),
     radial-gradient(circle at 72% 68%, rgba(255, 209, 117, .11), transparent 30%),
     linear-gradient(180deg, #061510 0%, #08111a 45%, #030506 100%);
+}
+body[data-preset='palette-alloy'] {
+  background:
+    radial-gradient(circle at 51% 37%, rgba(69, 255, 122, .23), transparent 25%),
+    radial-gradient(circle at 21% 24%, rgba(95, 150, 255, .14), transparent 31%),
+    radial-gradient(circle at 76% 70%, rgba(255, 220, 137, .10), transparent 29%),
+    linear-gradient(180deg, #061711 0%, #081319 46%, #030506 100%);
+}
+body[data-preset='green-pop'] {
+  background:
+    radial-gradient(circle at 50% 38%, rgba(57, 255, 20, .28), transparent 26%),
+    radial-gradient(circle at 18% 20%, rgba(98, 255, 160, .16), transparent 34%),
+    radial-gradient(circle at 82% 64%, rgba(255, 210, 101, .10), transparent 28%),
+    linear-gradient(180deg, #04190c 0%, #071412 46%, #020604 100%);
 }
 body[data-preset='emerald-metal'] {
   background:
     radial-gradient(circle at 50% 40%, rgba(57, 255, 20, .2), transparent 25%),
     radial-gradient(circle at 22% 18%, rgba(57, 255, 148, .13), transparent 34%),
     linear-gradient(180deg, #04120b 0%, #071214 48%, #020504 100%);
+}
+body[data-preset='emerald-glow'] {
+  background:
+    radial-gradient(circle at 50% 39%, rgba(57, 255, 20, .31), transparent 26%),
+    radial-gradient(circle at 22% 18%, rgba(57, 255, 148, .18), transparent 34%),
+    radial-gradient(circle at 80% 72%, rgba(91, 255, 117, .12), transparent 30%),
+    linear-gradient(180deg, #03180a 0%, #061513 48%, #020504 100%);
+}
+body[data-preset='emerald-luxe'] {
+  background:
+    radial-gradient(circle at 50% 40%, rgba(109, 255, 98, .22), transparent 25%),
+    radial-gradient(circle at 25% 20%, rgba(206, 255, 215, .10), transparent 32%),
+    radial-gradient(circle at 78% 72%, rgba(255, 220, 125, .09), transparent 28%),
+    linear-gradient(180deg, #041009 0%, #06100f 48%, #020403 100%);
 }
 body[data-preset='mint-studio'] {
   background:
