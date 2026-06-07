@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Florin Panel Cube — 3D Viewer</title>
+    <meta name="description" content="Interactive 3D cube assembled from six Florin SVG panels." />
+    <meta property="og:title" content="Florin Panel Cube — 3D Viewer" />
+    <meta property="og:description" content="Six supplied panels folded into a 3D cube in the Emerald Glow environment." />
+  </head>
+  <body data-preset="emerald-glow">
+    <main id="app" aria-label="Florin panel cube 3D environment">
+      <canvas id="scene" aria-hidden="true"></canvas>
+      <section class="hud">
+        <p class="eyebrow">Florin Cube</p>
+        <h1>Six panels,<br />folded in light.</h1>
+        <p class="copy">Drag to orbit. Scroll to inspect. The cube uses the same Emerald Glow environment.</p>
+      </section>
+      <section class="preset-panel final-lighting" aria-label="Final lighting setup">
+        <p class="preset-label">Final lighting: <strong id="preset-name">Emerald Glow</strong></p>
+      </section>
+      <div class="loading" id="loading">loading cube panels…</div>
+      <noscript>This 3D cube viewer requires JavaScript.</noscript>
+    </main>
+    <script type="module" src="/src/cube.js"></script>
+  </body>
+</html>
